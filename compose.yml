@@ -1,0 +1,17 @@
+services:
+  app:
+    image: ${APP_IMAGE}
+    build:
+      context: .
+      target: ${STAGE}
+    ports:
+      - "${APP_PORT}:${APP_PORT}"
+    env_file:
+      - .env
+    # volumes:
+    #   - .:/app
+    networks:
+      - ipdf-net
+
+networks:
+  ipdf-net:
