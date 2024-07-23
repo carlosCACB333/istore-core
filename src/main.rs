@@ -23,10 +23,10 @@ async fn main() -> std::io::Result<()> {
         let api = web::scope("/api")
             .service(products::routes())
             .service(category::routes());
-
+        let front_url = env::var("FRONT_URL").unwrap_or_default();
         let cors = Cors::default()
             .allowed_origin("https://ipdf.lat")
-            .allowed_origin("http://localhost:3000")
+            .allowed_origin(&front_url)
             .allow_any_method()
             .allow_any_header()
             .max_age(3600);
