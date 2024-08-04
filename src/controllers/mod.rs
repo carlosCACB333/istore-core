@@ -1,3 +1,4 @@
 pub mod app;
-pub mod products;
 pub mod category;
+pub mod chat;
+pub mod products;

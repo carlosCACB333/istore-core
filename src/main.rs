@@ -3,8 +3,8 @@ use actix_web::web::Data;
 use actix_web::{middleware::Logger, web, App, HttpServer};
 use dotenvy::dotenv;
 use env_logger::Env;
-use istore::controllers::products;
 use istore::controllers::{app, category};
+use istore::controllers::{chat, products};
 use istore::utils::db::get_connection_pool;
 use std::env;
 
@@ -20,10 +20,13 @@ async fn main() -> std::io::Result<()> {
     HttpServer::new(move || {
         log::info!("Starting server on port {}", port);
 
+        let front_url = env::var("FRONT_URL").unwrap_or_default();
+
         let api = web::scope("/api")
             .service(products::routes())
-            .service(category::routes());
-        let front_url = env::var("FRONT_URL").unwrap_or_default();
+            .service(category::routes())
+            .service(chat::routes());
+
         let cors = Cors::default()
             .allowed_origin("https://ipdf.lat")
             .allowed_origin(&front_url)

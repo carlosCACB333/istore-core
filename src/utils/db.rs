@@ -7,6 +7,7 @@ use diesel::{
 };
 use std::future::{ready, Ready};
 
+
 pub type Conn = PooledConnection<ConnectionManager<PgConnection>>;
 type PoolConn = r2d2::Pool<ConnectionManager<PgConnection>>;
 

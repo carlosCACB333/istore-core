@@ -175,15 +175,15 @@ impl Product {
         if let Some(order) = order_by_discount {
             if order.to_uppercase() == "ASC" {
                 products.sort_by(|a, b| {
-                    let a_discount = a.original_price - a.price;
-                    let b_discount = b.original_price - b.price;
-                    a_discount.cmp(&b_discount)
+                    let a_discount = (a.original_price - a.price) / a.original_price;
+                    let b_discount = (b.original_price - b.price) / b.original_price;
+                    a_discount.partial_cmp(&b_discount).unwrap()
                 });
             } else {
                 products.sort_by(|a, b| {
-                    let a_discount = a.original_price - a.price;
-                    let b_discount = b.original_price - b.price;
-                    b_discount.cmp(&a_discount)
+                    let a_discount = (a.original_price - a.price) / a.original_price;
+                    let b_discount = (b.original_price - b.price) / b.original_price;
+                    b_discount.partial_cmp(&a_discount).unwrap()
                 });
             }
         }

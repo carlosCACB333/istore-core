@@ -37,3 +37,30 @@ CREATE TABLE product_categories (
     FOREIGN KEY (product_id) REFERENCES products(id),
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    first_name VARCHAR(255) NOT NULL,
+    last_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+CREATE TABLE chats (
+    id VARCHAR(36) PRIMARY KEY,
+    model VARCHAR(50) NOT NULL,
+    api_key VARCHAR(255) NOT NULL,
+    user_id INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id)
+);
+CREATE TABLE messages (
+    id VARCHAR(36) PRIMARY KEY,
+    role VARCHAR(10) NOT NULL,
+    content JSONB NOT NULL,
+    chat_id VARCHAR(36) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (chat_id) REFERENCES chats(id)
+);
